@@ -42,6 +42,25 @@ output "css_configuration_id" {
 }
 
 ################################################################################
+# CSS Log Setting
+################################################################################
+
+output "css_log_setting_id" {
+  description = "ID of the CSS log setting"
+  value       = module.css_cluster.css_log_setting_id
+}
+
+output "css_log_setting_auto_enabled" {
+  description = "Whether automatic backup is enabled for CSS logs"
+  value       = module.css_cluster.css_log_setting_auto_enabled
+}
+
+output "css_log_setting_log_switch" {
+  description = "Whether the log function is enabled for CSS"
+  value       = module.css_cluster.css_log_setting_log_switch
+}
+
+################################################################################
 # Supporting Resources
 ################################################################################
 

@@ -310,3 +310,37 @@ variable "css_config_timeouts" {
   type        = map(string)
   default     = {}
 }
+
+################################################################################
+# CSS Log Setting
+################################################################################
+
+variable "create_css_log_setting" {
+  description = "Whether to create CSS log setting"
+  type        = bool
+  default     = false
+}
+
+variable "log_setting_agency" {
+  description = "The agency name. You can create an agency to allow CSS to call other cloud services"
+  type        = string
+  default     = null
+}
+
+variable "log_setting_base_path" {
+  description = "The storage path of backed up logs in the OBS bucket"
+  type        = string
+  default     = null
+}
+
+variable "log_setting_bucket" {
+  description = "The name of the OBS bucket for storing logs"
+  type        = string
+  default     = null
+}
+
+variable "log_setting_period" {
+  description = "The backup start time. Format: GMT"
+  type        = string
+  default     = null
+}

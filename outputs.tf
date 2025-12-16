@@ -123,3 +123,32 @@ output "css_configuration_cluster_id" {
   description = "The cluster ID associated with the CSS configuration"
   value       = try(huaweicloud_css_configuration.this[0].cluster_id, null)
 }
+
+################################################################################
+# CSS Log Setting
+################################################################################
+
+output "css_log_setting_id" {
+  description = "The CSS log setting ID"
+  value       = try(huaweicloud_css_log_setting.this[0].id, null)
+}
+
+output "css_log_setting_cluster_id" {
+  description = "The cluster ID associated with the CSS log setting"
+  value       = try(huaweicloud_css_log_setting.this[0].cluster_id, null)
+}
+
+output "css_log_setting_updated_at" {
+  description = "The update time of the CSS log setting"
+  value       = try(huaweicloud_css_log_setting.this[0].updated_at, null)
+}
+
+output "css_log_setting_auto_enabled" {
+  description = "Whether to enable automatic backup for CSS logs"
+  value       = try(huaweicloud_css_log_setting.this[0].auto_enabled, null)
+}
+
+output "css_log_setting_log_switch" {
+  description = "Whether to enable the log function for CSS"
+  value       = try(huaweicloud_css_log_setting.this[0].log_switch, null)
+}

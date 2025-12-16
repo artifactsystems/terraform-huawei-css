@@ -1,6 +1,7 @@
 locals {
-  create_css_cluster = var.create_css_cluster && var.create
-  create_css_config  = var.create_css_config && local.create_css_cluster
+  create_css_cluster     = var.create_css_cluster && var.create
+  create_css_config      = var.create_css_config && local.create_css_cluster
+  create_css_log_setting = var.create_css_log_setting && local.create_css_cluster
 
   cluster_name = var.name
 }
@@ -165,6 +166,22 @@ resource "huaweicloud_css_configuration" "this" {
       delete = lookup(timeouts.value, "delete", null)
     }
   }
+
+  depends_on = [huaweicloud_css_cluster.this]
+}
+
+################################################################################
+# CSS Log Setting
+################################################################################
+
+resource "huaweicloud_css_log_setting" "this" {
+  count = local.create_css_log_setting ? 1 : 0
+
+  cluster_id = huaweicloud_css_cluster.this[0].id
+  agency     = var.log_setting_agency
+  base_path  = var.log_setting_base_path
+  bucket     = var.log_setting_bucket
+  period     = var.log_setting_period
 
   depends_on = [huaweicloud_css_cluster.this]
 }

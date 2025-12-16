@@ -73,6 +73,13 @@ module "css_cluster" {
   indices_queries_cache_size   = "15%"
   thread_pool_force_merge_size = "2"
 
+  # CSS log setting
+  create_css_log_setting = true
+  log_setting_agency     = module.iam_agency.agency_names[0]
+  log_setting_bucket     = module.obs_logs_bucket.bucket_name
+  log_setting_base_path  = var.log_setting_base_path
+  log_setting_period     = "01:00 GMT+08:00"
+
   tags = local.tags
 }
 
@@ -102,4 +109,28 @@ module "security_group" {
   egress_rules        = ["all-all"]
 
   tags = local.tags
+}
+
+module "iam_agency" {
+  source = "github.com/artifactsystems/terraform-huawei-iam?ref=v1.1.0"
+
+  agencies = [
+    {
+      name                  = "css_obs_agency"
+      description           = "Agency for CSS to access OBS for log storage"
+      delegated_domain_name = "op_svc_usearch"
+      all_resources_roles   = ["OBS OperateAccess"]
+    }
+  ]
+}
+
+module "obs_logs_bucket" {
+  source = "github.com/artifactsystems/terraform-huawei-obs?ref=v1.0.0"
+
+  bucket        = "${local.name}-css-logs"
+  force_destroy = true
+
+  tags = merge(local.tags, {
+    Purpose = "CSS Logs Storage"
+  })
 }

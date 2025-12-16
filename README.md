@@ -43,6 +43,7 @@ This module supports the following CSS features:
 - ✅ **Multi-Node Architecture**: Configure ESS (data), master, client, and cold data nodes
 - ✅ **Security Mode**: Enable authentication with username/password
 - ✅ **HTTPS Support**: Encrypted cluster connections
+- ✅ **Log Management**: Configure log storage in OBS buckets with automated backup
 
 ### Node Configuration
 - ✅ **ESS (Data) Nodes**: Primary data storage nodes with configurable flavor, count, and volume
@@ -224,8 +225,31 @@ Or disable specific resources:
 module "css_cluster" {
   source = "github.com/artifactsystems/terraform-huawei-css?ref=v1.0.0"
 
-  create_css_cluster = true   # Create the cluster
-  create_css_config  = false  # Skip configuration resource
+  create_css_cluster     = true   # Create the cluster
+  create_css_config      = false  # Skip configuration resource
+  create_css_log_setting = false  # Skip log setting resource
+
+  # ... other configuration
+}
+```
+
+## Log Management
+
+Configure log storage and backup to OBS buckets for monitoring and compliance:
+
+```hcl
+module "css_cluster" {
+  source = "github.com/artifactsystems/terraform-huawei-css?ref=v1.0.0"
+
+  name           = "log-enabled-cluster"
+  engine_version = "7.10.2"
+
+  # Enable log setting
+  create_css_log_setting = true
+  log_setting_agency     = "css-log-agency"
+  log_setting_bucket     = "my-css-logs-bucket"
+  log_setting_base_path  = "elasticsearch/logs/"
+  log_setting_period     = "00:00 GMT+08:00"
 
   # ... other configuration
 }

@@ -18,3 +18,15 @@ variable "enterprise_project_id" {
   type        = string
   default     = null
 }
+
+################################################################################
+# CSS Log Setting Configuration
+################################################################################
+
+
+
+variable "log_setting_base_path" {
+  description = "The storage path of backed up logs in the OBS bucket"
+  type        = string
+  default     = "elasticsearch/logs/"
+}
